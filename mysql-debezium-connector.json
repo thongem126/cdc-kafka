@@ -1,0 +1,31 @@
+{
+    "name": "mysql-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "tasks.max": "1",
+        "database.hostname": "db",  
+        "database.port": "3306",
+        "database.user": "root",
+        "database.password": "root1234",
+        "database.server.id": "184054",
+        "database.server.name": "mysql_server",  
+        "database.include.list": "congtiendb, trutiendb", 
+        "database.history.kafka.bootstrap.servers": "kafka:9092",
+        "database.history.kafka.topic": "dbhistory.my_topic",
+        "database.history.producer.bootstrap.servers": "kafka:9092",
+        "database.history.consumer.bootstrap.servers": "kafka:9092",
+        "database.connection.url": "jdbc:mysql://db:3306/congtiendb,trutiendb?allowPublicKeyRetrieval=true&useSSL=false",
+
+        "transforms": "route1, route2", 
+        "transforms.route1.type": "org.apache.kafka.connect.transforms.RegexRouter",
+        "transforms.route1.regex": "^mysql_server\\.congtiendb\\.(.*)$",
+        "transforms.route1.replacement": "congtien",
+
+        "transforms.route2.type": "org.apache.kafka.connect.transforms.RegexRouter",
+        "transforms.route2.regex": "^mysql_server\\.trutiendb\\.(.*)$",
+        "transforms.route2.replacement": "trutien"
+
+    }
+    
+}
+  
